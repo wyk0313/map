@@ -1,0 +1,262 @@
+  <!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>KU 22-1 데이터인문학 지도</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+        <style>
+            html, body, #mapid{
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id = 'mapid'>
+        </div>
+        <script>
+            var map = L.map('mapid').setView([37.5378, 127.0253], 11);
+            var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+                attribution:'&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors'
+            }).addTo(map);
+            var GoogleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var GoogleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var GoogleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var GoogleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                subdomains: 'abcd',
+                minZoom: 1,
+                maxZoom: 16,
+                ext: 'jpg'
+            });
+
+            var baseMaps = {
+                "GoogleStreetMap": GoogleStreets,
+                "GoogleSatelliteMap":GoogleSat,
+                "GoogleTerrain":GoogleTerrain,
+                "GoogleHybrid":GoogleHybrid,
+                "Watercolor":Stamen_Watercolor,
+                "OpenStreetMap":osm
+            };
+            
+            L.control.layers(baseMaps).addTo(map);
+  
+            var myIcon = L.Icon.extend({
+                options: {
+                shadowUrl: 'image/myicon_shadow.png',
+                iconSize:     [46, 62],
+                shadowSize:   [44, 22],
+                iconAnchor:   [23, 62],
+                shadowAnchor: [4, 22],
+                popupAnchor:  [0, -62]
+                }
+            });
+
+            var castleIcon = new myIcon({iconUrl: 'image/myicon_castle.png'}),
+                mountainIcon = new myIcon({iconUrl: 'image/myicon_mountain.png'}),
+                mountainroadIcon = new myIcon({iconUrl: 'image/myicon_mountainroad.png'}),
+                horseIcon = new myIcon({iconUrl: 'image/myicon_horse.png'});
+                buildingIcon = new myIcon({iconUrl: 'image/myicon_building.png'});
+                villageIcon = new myIcon({iconUrl: 'image/myicon_village.png'});
+
+                L.icon = function (options) {
+                    return new L.Icon(options);
+                };
+      
+            var part_1 = L.layerGroup();
+            var part_2 = L.layerGroup();
+            var part_3 = L.layerGroup();  
+            var part_4 = L.layerGroup();  
+            var part_5 = L.layerGroup();  
+            var part_6 = L.layerGroup();  
+            var part_7 = L.layerGroup();
+            var part_8 = L.layerGroup();    
+
+            map.addLayer(part_1)
+            map.addLayer(part_2)
+            map.addLayer(part_3)
+            map.addLayer(part_4)
+            map.addLayer(part_5)
+            map.addLayer(part_6)
+            map.addLayer(part_7)
+            map.addLayer(part_8)
+
+            var overlays = {
+                "서닷잉-운영": part_1,
+                "서닷잉-폐점": part_2,
+                "맛있조-한식": part_3,
+                "맛있조-중식": part_4,
+                "맛있조-일식": part_5,
+                "죽생사-다리": part_6,
+                "샘플-유원지": part_7,
+                "샘플-초등학교": part_8
+            };
+
+            var ctr_mapLayers = L.control.layers(null, overlays, {collapsed:false, position:'bottomleft'}).addTo(map);
+        
+            var geodata =[
+            {"type": "Feature", "properties": {"name": "대학로예술극장", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로10길 17", "refurl": "https://theater.arko.or.kr/Pages/Main.aspx"}, "geometry": {"type": "Point", "coordinates": [127.00306, 37.58194]}},
+{"type": "Feature", "properties": {"name": "동양예술극장", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 혜화동 163-24", "refurl": "https://www.kopis.or.kr/por/db/prfplc/prfplcView.do?menuId=MNU_00021&mt10Id=FC001087"}, "geometry": {"type": "Point", "coordinates": [127, 37.584531]}},
+{"type": "Feature", "properties": {"name": "씨어터_쿰", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 혜화동 창경궁로 253-7 B1", "refurl": "https://www.kopis.or.kr/por/db/prfplc/prfplcView.do?menuId=MNU_00021&mt10Id=FC002588"}, "geometry": {"type": "Point", "coordinates": [126.99946, 37.58459]}},
+{"type": "Feature", "properties": {"name": "아르코예술극장", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로8길 7", "refurl": "https://theater.arko.or.kr/Pages/Main.aspx"}, "geometry": {"type": "Point", "coordinates": [127, 37.581195]}},
+{"type": "Feature", "properties": {"name": "아트원씨어터", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로12길 83", "refurl": "https://www.kopis.or.kr/por/db/prfplc/prfplcView.do?menuId=MNU_00021&mt10Id=FC000833"}, "geometry": {"type": "Point", "coordinates": [127.00399, 37.58023]}},
+{"type": "Feature", "properties": {"name": "한양레퍼토리_씨어터", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로 144 중원빌딩 B1", "refurl": "https://www.kopis.or.kr/por/db/prfplc/prfplcView.do?menuId=MNU_00021&mt10Id=FC000188"}, "geometry": {"type": "Point", "coordinates": [127.00176, 37.5839]}},
+{"type": "Feature", "properties": {"name": "홍대_대학로_아트센터", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로 57", "refurl": "http://www.hongikartcenter.com/main.do"}, "geometry": {"type": "Point", "coordinates": [127, 37.57667]}},
+{"type": "Feature", "properties": {"name": "SH아트홀", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 동숭길 25 SH아트홀", "refurl": "https://www.facebook.com/sharthall/"}, "geometry": {"type": "Point", "coordinates": [127, 37.58004]}},
+{"type": "Feature", "properties": {"name": "JTN 아트홀", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 이화장길 26", "refurl": "http://www.jtnarthall.com/"}, "geometry": {"type": "Point", "coordinates": [127.003925, 37.576437]}},
+{"type": "Feature", "properties": {"name": "남산예술센터", "class": "Theater", "category": "서닷잉-폐점", "form": "point", "address": "서울특별시 중구 소파로 138", "refurl": "https://www.nsac.or.kr/"}, "geometry": {"type": "Point", "coordinates": [126.98878, 37.559779]}},
+{"type": "Feature", "properties": {"name": "대학로 예술마당", "class": "Theater", "category": "서닷잉-폐점", "form": "point", "address": "서울특별시 종로구 이화장길 26", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.003925, 37.576437]}},
+{"type": "Feature", "properties": {"name": "대학로 자유극장", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로12길 31", "refurl": "https://www.kopis.or.kr/por/db/prfplc/prfplcView.do?menuId=MNU_00021&mt10Id=FC000785"}, "geometry": {"type": "Point", "coordinates": [127.003609, 37.5827]}},
+{"type": "Feature", "properties": {"name": "드림아트센터", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 동숭2길 123", "refurl": "https://blog.naver.com/dreamartcenter"}, "geometry": {"type": "Point", "coordinates": [127.003281, 37.583265]}},
+{"type": "Feature", "properties": {"name": "마포아트센터 아트홀 맥", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 마포구 대흥로20길 28", "refurl": "https://www.mfac.or.kr/foundation/facility_1.jsp"}, "geometry": {"type": "Point", "coordinates": [126.95, 37.549748]}},
+{"type": "Feature", "properties": {"name": "알과핵 소극장", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 동숭동 1-140", "refurl": "https://www.kopis.or.kr/por/db/prfplc/prfplcView.do?menuId=MNU_00021&mt10Id=FC000416"}, "geometry": {"type": "Point", "coordinates": [127.003558, 37.579862]}},
+{"type": "Feature", "properties": {"name": "예그린 씨어터", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 동숭동 1-8", "refurl": "http://yegreen.creatorlink.net/"}, "geometry": {"type": "Point", "coordinates": [127.003062, 37.58389]}},
+{"type": "Feature", "properties": {"name": "유니플렉스", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 종로구 대학로12길 64", "refurl": "http://www.uniplex.co.kr/"}, "geometry": {"type": "Point", "coordinates": [127.003698, 37.581132]}},
+{"type": "Feature", "properties": {"name": "이해랑예술극장", "class": "Theater", "category": "서닷잉-운영", "form": "point", "address": "서울특별시 중구 필동로1길 30", "refurl": "https://larts.dongguk.edu/"}, "geometry": {"type": "Point", "coordinates": [126.99977, 37.558585]}},
+{"type": "Feature", "properties": {"name": "용수산", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9891225, 37.57941493]}},
+{"type": "Feature", "properties": {"name": "아리랑", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://www.arirangcook.com/"}, "geometry": {"type": "Point", "coordinates": [126.98036, 37.56392]}},
+{"type": "Feature", "properties": {"name": "부산식당", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://busan180.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9839669, 37.57389803]}},
+{"type": "Feature", "properties": {"name": "밀본", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://mealbon.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0512014, 37.54678107]}},
+{"type": "Feature", "properties": {"name": "북막골", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9820187, 37.58649416]}},
+{"type": "Feature", "properties": {"name": "찬양집", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://chanyangjip.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.990235, 37.57279319]}},
+{"type": "Feature", "properties": {"name": "오가네 족발", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://oganejokbal.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0435205, 37.48506159]}},
+{"type": "Feature", "properties": {"name": "오근내 닭갈비", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://xn--6i0bp5cm93a.com/"}, "geometry": {"type": "Point", "coordinates": [126.9596799, 37.5245113]}},
+{"type": "Feature", "properties": {"name": "능라도", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://neungradogn.cityfood.co.kr/"}, "geometry": {"type": "Point", "coordinates": [127.05552, 37.50949]}},
+{"type": "Feature", "properties": {"name": "일호식", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.0021645, 37.53384458]}},
+{"type": "Feature", "properties": {"name": "한일관", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.hanilkwan.co.kr/"}, "geometry": {"type": "Point", "coordinates": [127.0324777, 37.52775655]}},
+{"type": "Feature", "properties": {"name": "오통영", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://ohtongyoung.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0408297, 37.52539119]}},
+{"type": "Feature", "properties": {"name": "목천집", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://mokchonjib.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0133895, 37.48126542]}},
+{"type": "Feature", "properties": {"name": "꿉당", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.0190541, 37.51660885]}},
+{"type": "Feature", "properties": {"name": "화해당", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://smartstore.naver.com/hwahaedang/"}, "geometry": {"type": "Point", "coordinates": [126.91683, 37.52703]}},
+{"type": "Feature", "properties": {"name": "안씨막걸리", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://ahnmakgeolli.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9874095, 37.53858022]}},
+{"type": "Feature", "properties": {"name": "품", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.poomseoul.com/korean/intro.asp"}, "geometry": {"type": "Point", "coordinates": [127.0521316, 37.5177353]}},
+{"type": "Feature", "properties": {"name": "한식공간", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9884326, 37.5775971]}},
+{"type": "Feature", "properties": {"name": "곳간", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://www.chorokbaemfoodfarm.com/"}, "geometry": {"type": "Point", "coordinates": [126.9201241, 37.5222012]}},
+{"type": "Feature", "properties": {"name": "발우공양", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://balwoo.or.kr/"}, "geometry": {"type": "Point", "coordinates": [126.9831801, 37.5738938]}},
+{"type": "Feature", "properties": {"name": "큰기와집", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://blog.naver.com/big_giwajjip"}, "geometry": {"type": "Point", "coordinates": [126.985492, 37.578714]}},
+{"type": "Feature", "properties": {"name": "리스토란테 에오", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://ristoranteeo.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.928083, 37.5263475]}},
+{"type": "Feature", "properties": {"name": "이십사절기", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.0311557, 37.5218872]}},
+{"type": "Feature", "properties": {"name": "하모", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.hamo-kitchen.com/"}, "geometry": {"type": "Point", "coordinates": [127.0327822, 37.5233152]}},
+{"type": "Feature", "properties": {"name": "봉피양", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://bonpiyang.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.1259879, 37.5101881]}},
+{"type": "Feature", "properties": {"name": "오장동 함흥냉면", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://ojangmyeonok.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9998714, 37.564234]}},
+{"type": "Feature", "properties": {"name": "정인면옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://junginmyunok.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9217493, 37.5306271]}},
+{"type": "Feature", "properties": {"name": "필동면옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9969996, 37.5603604]}},
+{"type": "Feature", "properties": {"name": "대성집", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9609524, 37.572676]}},
+{"type": "Feature", "properties": {"name": "백년옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://baengnyeonok.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0137688, 37.4811511]}},
+{"type": "Feature", "properties": {"name": "피양콩 할마니", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://piyang.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0552278, 37.5040712]}},
+{"type": "Feature", "properties": {"name": "개성만두 궁", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://www.koong.co.kr/"}, "geometry": {"type": "Point", "coordinates": [126.9853967, 37.57423]}},
+{"type": "Feature", "properties": {"name": "구복만두", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://goobokmandoo.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9729766, 37.5453777]}},
+{"type": "Feature", "properties": {"name": "자하 손만두", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9660303, 37.5930803]}},
+{"type": "Feature", "properties": {"name": "충무로 쭈꾸미 불고기", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://jjubulgogi.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9921889, 37.5617223]}},
+{"type": "Feature", "properties": {"name": "역전회관", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://www.yukjeon.com/"}, "geometry": {"type": "Point", "coordinates": [126.947039, 37.5429051]}},
+{"type": "Feature", "properties": {"name": "이문 설렁탕", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://imun.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9838844, 37.5727213]}},
+{"type": "Feature", "properties": {"name": "부촌육회", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://bcyukhoe.modoo.at"}, "geometry": {"type": "Point", "coordinates": [126.9998746, 37.5704048]}},
+{"type": "Feature", "properties": {"name": "만족오향족발", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.manjok.net"}, "geometry": {"type": "Point", "coordinates": [126.9760114, 37.5632415]}},
+{"type": "Feature", "properties": {"name": "할매집", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9714331, 37.5756375]}},
+{"type": "Feature", "properties": {"name": "용금옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9703722, 37.57962402]}},
+{"type": "Feature", "properties": {"name": "명동교자", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.mdkj.co.kr/"}, "geometry": {"type": "Point", "coordinates": [126.9523331, 37.560042]}},
+{"type": "Feature", "properties": {"name": "임병주 산동 칼국수", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://sandongkalguksu.modoo.at"}, "geometry": {"type": "Point", "coordinates": [127.0258192, 37.4845717]}},
+{"type": "Feature", "properties": {"name": "황생가 칼국수", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://hwangsanga.modoo.at"}, "geometry": {"type": "Point", "coordinates": [126.9765058, 37.58013175]}},
+{"type": "Feature", "properties": {"name": "하동관", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.hadongkwan.com/"}, "geometry": {"type": "Point", "coordinates": [126.976593, 37.5644272]}},
+{"type": "Feature", "properties": {"name": "남포면옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9733705, 37.5670813]}},
+{"type": "Feature", "properties": {"name": "진미 평양냉면", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://jinmipy.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9690163, 37.5161247]}},
+{"type": "Feature", "properties": {"name": "옥동식", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://instagram.com/okdongsik"}, "geometry": {"type": "Point", "coordinates": [126.9061472, 37.5526572]}},
+{"type": "Feature", "properties": {"name": "황금콩밭", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9483341, 37.5509597]}},
+{"type": "Feature", "properties": {"name": "미진", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://mijin1954.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9715409, 37.5710034]}},
+{"type": "Feature", "properties": {"name": "양양 메밀 막국수", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://yangyangkuksu.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9841478, 37.492575]}},
+{"type": "Feature", "properties": {"name": "마포옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9349333, 37.5398916]}},
+{"type": "Feature", "properties": {"name": "삼청동 수제비", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://www.삼청동수제비.kr"}, "geometry": {"type": "Point", "coordinates": [126.9148022, 37.5850126]}},
+{"type": "Feature", "properties": {"name": "꽃, 밥에 피다", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.goodbab.co.kr"}, "geometry": {"type": "Point", "coordinates": [126.9756454, 37.57530275]}},
+{"type": "Feature", "properties": {"name": "게방식당", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://smartstore.naver.com/gebang"}, "geometry": {"type": "Point", "coordinates": [127.0310619, 37.5173134]}},
+{"type": "Feature", "properties": {"name": "합정옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9020893, 37.5495526]}},
+{"type": "Feature", "properties": {"name": "우래옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9903237, 37.5682698]}},
+{"type": "Feature", "properties": {"name": "광화문국밥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9670332, 37.5689749]}},
+{"type": "Feature", "properties": {"name": "봉산옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.0040794, 37.48333854]}},
+{"type": "Feature", "properties": {"name": "유림면", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.instagram.com/kyoyangsiksa"}, "geometry": {"type": "Point", "coordinates": [126.9090597, 37.5642371]}},
+{"type": "Feature", "properties": {"name": "금돼지식당", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://goldpig1982.blog.me/"}, "geometry": {"type": "Point", "coordinates": [127.0033184, 37.5570932]}},
+{"type": "Feature", "properties": {"name": "세미계", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.001563, 37.53334778]}},
+{"type": "Feature", "properties": {"name": "가온", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://gaonkr.com"}, "geometry": {"type": "Point", "coordinates": [127.0278973, 37.522641]}},
+{"type": "Feature", "properties": {"name": "라연", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "https://www.shilla.net/seoul/dining/viewDining.do?contId=KRN#ad-image-0"}, "geometry": {"type": "Point", "coordinates": [126.9969301, 37.5555885]}},
+{"type": "Feature", "properties": {"name": "권숙수", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://kwonsooksoo.com/"}, "geometry": {"type": "Point", "coordinates": [126.9969301, 37.5555885]}},
+{"type": "Feature", "properties": {"name": "주옥", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9696685, 37.5647734]}},
+{"type": "Feature", "properties": {"name": "비채나", "class": "Restaurant", "category": "맛있조-한식", "form": "point", "address": "null", "refurl": "http://www.bicena.com/"}, "geometry": {"type": "Point", "coordinates": [127.0942243, 37.5125507]}},
+{"type": "Feature", "properties": {"name": "산동교자관", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "https://shandongjiaozi.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0306844, 37.52787871]}},
+{"type": "Feature", "properties": {"name": "팀호완", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "https://www.timhowan.com/"}, "geometry": {"type": "Point", "coordinates": [127.0568812, 37.51143542]}},
+{"type": "Feature", "properties": {"name": "우육면관", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9861187, 37.56856201]}},
+{"type": "Feature", "properties": {"name": "진진", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "https://jinjinseoul.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [126.9129716, 37.55815079]}},
+{"type": "Feature", "properties": {"name": "유 유안", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "https://www.fourseasons.com/kr/seoul/dining/restaurants/yu_yuan/"}, "geometry": {"type": "Point", "coordinates": [126.97534, 37.57071]}},
+{"type": "Feature", "properties": {"name": "이종국104", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9875087, 37.5956594]}},
+{"type": "Feature", "properties": {"name": "만두집", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "https://mandoojip.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0388643, 37.5278854]}},
+{"type": "Feature", "properties": {"name": "금산제면소", "class": "Restaurant", "category": "맛있조-중식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.975395, 37.5586242]}},
+{"type": "Feature", "properties": {"name": "이나니와 요스케", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "http://www.food-biz.or.kr/inaniwa/story.php"}, "geometry": {"type": "Point", "coordinates": [126.9791954, 37.56533428]}},
+{"type": "Feature", "properties": {"name": "멘텐", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9885846, 37.56195745]}},
+{"type": "Feature", "properties": {"name": "야키토리 묵", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9244917, 37.56462071]}},
+{"type": "Feature", "properties": {"name": "현우동", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.024298, 37.51699358]}},
+{"type": "Feature", "properties": {"name": "스바루", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9858204, 37.4923272]}},
+{"type": "Feature", "properties": {"name": "미나미", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.0097705, 37.4933079]}},
+{"type": "Feature", "properties": {"name": "교다이야", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9048203, 37.54692039]}},
+{"type": "Feature", "properties": {"name": "오레노 라멘", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9089357, 37.5474778]}},
+{"type": "Feature", "properties": {"name": "교양식사", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [126.9915272, 37.5358654]}},
+{"type": "Feature", "properties": {"name": "미미면가", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "null"}, "geometry": {"type": "Point", "coordinates": [127.012731, 37.5200428]}},
+{"type": "Feature", "properties": {"name": "코지마", "class": "Restaurant", "category": "맛있조-일식", "form": "point", "address": "null", "refurl": "https://kojima.modoo.at/"}, "geometry": {"type": "Point", "coordinates": [127.0352272, 37.524381]}},
+];  
+
+            L.geoJson(geodata, {
+                onEachFeature: function (feature, layer) {
+                            layer.bindPopup('<a href="' + feature.properties.refurl + '" target="_blank"><center><big><b>' + "[" + feature.properties.class + "]" +" " + feature.properties.name + '</b></big></a><br/>' + feature.properties.address)},
+
+                pointToLayer: function(feature, latlng) { 
+                    switch (feature.properties.category) {
+                                case '서닷잉-운영': return L.marker(latlng, {icon: castleIcon}).addTo(part_1);
+                                case '서닷잉-폐점': return L.marker(latlng, {icon: castleIcon}).addTo(part_2);
+                                case '맛있조-한식': return L.marker(latlng, {icon: buildingIcon}).addTo(part_3);
+                                case '맛있조-중식': return L.marker(latlng, {icon: mountainroadIcon}).addTo(part_4);
+                                case '맛있조-일식': return L.marker(latlng, {icon: villageIcon}).addTo(part_5);
+                                case '죽생사-다리': return L.marker(latlng, {icon: villageIcon}).addTo(part_6);
+                                case '샘플-유원지': return L.marker(latlng, {icon: horseIcon}).addTo(part_7);
+                                case '샘플-초등학교': return L.marker(latlng, {icon: villageIcon}).addTo(part_8);
+                        }
+                    }
+                });
+    
+                var latlngs1 = [[37.5424, 127.1157], [37.5407, 127.1143], [37.5401, 127.116], [37.5422, 127.1174]];
+                var latlngs2 = [[37.55821, 126.93998], [37.5581, 126.94], [37.55832, 126.94054], [37.55841, 126.94011]];
+                var latlngs3 = [[37.50464, 126.99574], [37.50388, 126.99629], [37.50427, 126.9977], [37.50523, 126.99701]];
+                var latlngs4 = [[37.49292, 127.0874], [37.49225, 127.08768], [37.49252, 127.08859], [37.49319, 127.08826]];
+
+                var polygon = L.polygon(latlngs1, {color: "blue", weight:15, opacity:0.7}).addTo(part_7);
+                var polygon = L.polygon(latlngs2, {color: "red", weight:15, opacity:0.7}).addTo(part_7); 
+                var polygon = L.polygon(latlngs3, {color: "black", weight:15, opacity:0.7}).addTo(part_8); 
+                var polygon = L.polygon(latlngs4, {color: "green", weight:15, opacity:0.7}).addTo(part_8); 
+
+                var linelatlngs1 = [[37.6034, 126.81469], [37.5928, 126.80486]];
+                var linelatlngs2 = [[37.59194, 126.83095], [37.58453, 126.82147]];
+                var linelatlngs3 = [[37.57619, 126.86636], [37.5622, 126.85589]];
+                var linelatlngs4 = [[37.55805, 126.89468], [37.54632, 126.88772]];
+                var linelatlngs5 = [[37.54744, 126.90923], [37.53733, 126.89898]];
+
+                var polyline = L.polyline(linelatlngs1, {color: 'blue', weight:7, opacity:1.0}).addTo(part_6);
+                var polyline = L.polyline(linelatlngs2, {color: 'red', weight:7, opacity:1.0}).addTo(part_6);
+                var polyline = L.polyline(linelatlngs3, {color: 'green', weight:7, opacity:1.0}).addTo(part_6);
+                var polyline = L.polyline(linelatlngs4, {color: 'purple', weight:7, opacity:1.0}).addTo(part_6);
+                var polyline = L.polyline(linelatlngs5, {color: 'blue', weight:7, opacity:1.0}).addTo(part_6);
+
+	    </script> 
+    </body>
+</html>
+
